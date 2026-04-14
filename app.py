@@ -11,15 +11,14 @@ from datetime import datetime
 # 解決編碼問題
 sys.stdout.reconfigure(encoding='utf-8')
 
-# 匯入您的自定義模組
+# 匯入自定義模組
 from retrieval_brain import MaintenanceRAG
 from mermaid_agent import MermaidAgent
 
-# 初始化組件
 rag = MaintenanceRAG()
 painter = MermaidAgent()
 
-# --- 建立儲存歷史紀錄的資料夾 ---
+# --- 建立儲存歷史紀錄 ---
 SAVE_DIR = "history_outputs"
 os.makedirs(SAVE_DIR, exist_ok=True)
 
@@ -43,7 +42,7 @@ def save_to_local(query, answer, html_content):
     with open(json_path, 'w', encoding='utf-8') as f:
         json.dump(record, f, ensure_ascii=False, indent=4)
         
-    # 儲存完整的 HTML
+    # 儲存 HTML
     html_path = os.path.join(SAVE_DIR, f"{base_filename}.html")
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
@@ -53,9 +52,8 @@ def save_to_local(query, answer, html_content):
 def get_history_list():
     """掃描資料夾，回傳最新的歷史紀錄列表"""
     files = glob.glob(os.path.join(SAVE_DIR, "*.html"))
-    # 依照修改時間排序，最新的在最上面
+    # 時間排序
     files.sort(key=os.path.getmtime, reverse=True)
-    # 只取檔名（不含副檔名）作為選單選項
     return [os.path.basename(f).replace('.html', '') for f in files]
 
 def load_history(selected_file):
@@ -67,7 +65,7 @@ def load_history(selected_file):
     if os.path.exists(html_path):
         with open(html_path, 'r', encoding='utf-8') as f:
             raw_html = f.read()
-        # 將讀出來的 HTML 轉為 Base64 iframe 以避免污染 Gradio 全局 CSS
+        # 將HTML 轉為 Base64 iframe 以避免污染 Gradio 全局 CSS
         b64 = base64.b64encode(raw_html.encode('utf-8')).decode('utf-8')
         return f'<iframe src="data:text/html;base64,{b64}" width="100%" height="900px" style="border:none; border-radius:15px;"></iframe>'
     else:
@@ -150,7 +148,7 @@ def handle_query(message, history):
 with gr.Blocks(title="太陽能設備維修助手", theme=gr.themes.Soft(primary_hue="blue"), css=custom_css) as demo:
     
     with gr.Tabs():
-        # --- 分頁 1: 核心系統 ---
+        # ---  核心系統 ---
         with gr.Tab("🛠️ 維修診斷主系統"):
             with gr.Sidebar():
                 gr.Markdown("## 📂 資料設定")
@@ -174,7 +172,7 @@ with gr.Blocks(title="太陽能設備維修助手", theme=gr.themes.Soft(primary
                     
                     msg.submit(handle_query, [msg, chatbot], [msg, chatbot, vis_output])
 
-        # --- 分頁 2: 歷史紀錄 ---
+        # ---  歷史紀錄 ---
         with gr.Tab("📁 歷史紀錄查詢"):
             gr.Markdown("## 🗂️ 過去檢索與分析紀錄")
             gr.Markdown("在此選擇您過往查詢過的維修案例，系統將重新載入當時的流程圖與建議內容。")
@@ -183,13 +181,13 @@ with gr.Blocks(title="太陽能設備維修助手", theme=gr.themes.Soft(primary
                 with gr.Column(scale=1):
                     refresh_btn = gr.Button("🔄 重新載入列表", variant="secondary")
                 with gr.Column(scale=3):
-                    # 預設載入時讀取一次清單
+                    # 載入時讀取一次清單
                     history_dropdown = gr.Dropdown(choices=get_history_list(), label="選擇歷史紀錄", interactive=True)
             
             history_display = gr.HTML('<div class="dashed-placeholder">請從上方選單選擇一筆紀錄...</div>')
 
             # --- 綁定歷史紀錄事件 ---
-            # 點擊重新整理按鈕時，更新下拉選單的選項
+            # 更新歷史紀錄
             refresh_btn.click(fn=lambda: gr.update(choices=get_history_list()), outputs=history_dropdown)
             # 當下拉選單的值改變時，讀取並顯示對應的 HTML
             history_dropdown.change(fn=load_history, inputs=history_dropdown, outputs=history_display)
@@ -197,7 +195,7 @@ with gr.Blocks(title="太陽能設備維修助手", theme=gr.themes.Soft(primary
 if __name__ == "__main__":
     # 啟動 Gradio 應用程式
     demo.launch(
-        server_name="127.0.0.1",  # 確保這行寫完整，不要只有 server_na
+        server_name="127.0.0.1",
         theme=gr.themes.Soft(primary_hue="blue"),
         css=custom_css
     )
