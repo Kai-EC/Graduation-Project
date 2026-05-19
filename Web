@@ -148,9 +148,8 @@
                         <i data-lucide="image" class="w-16 h-16 mb-4 text-slate-600"></i>
                         <p class="text-lg font-medium text-white mb-2">系統介面預覽區塊</p>
                         <p class="text-sm text-slate-400 max-w-md text-center leading-relaxed">
-                            <img src="https://github.com/user-attachments/assets/a19229fc-75ae-4b5e-9549-43de4f40f494" 
-                                alt="系統介面預覽" 
-                                class="max-w-full h-auto rounded-lg shadow-lg border border-slate-700">
+                            (目前於網頁預覽沙盒中，無法載入本地圖片)<br>
+                            請將下載的 <code class="bg-slate-700 text-brand-400 px-1.5 py-0.5 rounded">index.html</code> 與 <code class="bg-slate-700 text-brand-400 px-1.5 py-0.5 rounded">image_742c07.png</code> 放在同一個資料夾，即可在您的電腦瀏覽器上正常顯示！
                         </p>
                     </div>
                 </div>
