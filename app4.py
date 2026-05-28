@@ -1,4 +1,3 @@
-# 05-FINAL 終極融合版：專業 UI 介面與強大 RAG 代理架構 (完美修復 LOG 表格高度版)
 #目前有加使用指示05-14編輯確認版
 import sys
 import gradio as gr
