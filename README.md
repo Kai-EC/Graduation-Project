@@ -18,7 +18,7 @@
 3. **結構化流程圖轉譯代理 (`mermaid_agent.py`)**：利用動態 JSON 陣列萃取，將維修文本轉譯為無損渲染的 Mermaid.js 流程圖代碼。
 4. **RAGAS 品質遙測裁判 (`score.py`)**：全無人值守之工業閉環反饋，針對知識落地性、回答相關性與工業安全性進行自動化稽核。
 5. **全局路由與非阻塞異步調度主控台 (`app4.py`)**：整合生成器與多執行緒，釋放前端負載，達成人機互動的零延遲感。
-<img width="1116" height="552" alt="image" src="https://github.com/user-attachments/assets/55fb3ab5-00ed-43c8-af46-5e624f794c0f" />
+<img width="345" height="561" alt="image" src="https://github.com/user-attachments/assets/0dc77263-1ab5-4443-a9c1-122ce76f13ce" />
 
 ---
 
